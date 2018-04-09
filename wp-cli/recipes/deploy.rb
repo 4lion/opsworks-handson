@@ -33,7 +33,7 @@ public_hostname = response.body
 #end
 
 execute "wp deploy" do
-   command "wp core install --url=#{public_hostname} --title=Test --admin_name=admin --admin_password=admin --admin_email=#{wp_admin_email}"
+   command "sudo -u ec2-user -i -- wp core install --url=#{public_hostname} --title=Test --admin_name=admin --admin_password=admin --admin_email=#{wp_admin_email}"
    cwd "#{wpdir}"
    user "deploy"
    action :run
