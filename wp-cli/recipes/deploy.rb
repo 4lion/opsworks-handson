@@ -9,7 +9,7 @@ dbhost = node[:deploy][:wordpress][:database][:host]
 wp_admin_email = node[:deploy][:wordpress][:wp_admin_email]
 
 execute "wp configure" do
-   command "wp core config --dbname=#{dbname} --dbuser=#{dbuser} --dbpass=#{dbpass} --dbhost=#{dbhost}"
+   command "wp core config --dbname=#{dbname} --dbuser=#{dbuser} --dbpass=#{dbpass} --dbhost=#{dbhost} --path=#{wpdir}"
    cwd "#{wpdir}"
    user "deploy"
    not_if { File.exists?("#{wpdir}/wp-config.php") }
@@ -33,7 +33,7 @@ public_hostname = response.body
 #end
 
 execute "wp deploy" do
-   command "wp core install --url=#{public_hostname} --title=Test --admin_name=admin --admin_password=admin --admin_email=#{wp_admin_email}"
+   command "wp core install --url=#{public_hostname} --title=Test --admin_name=admin --admin_password=admin --admin_email=#{wp_admin_email} --path=#{wpdir}"
    cwd "#{wpdir}"
    user "deploy"
    action :run
